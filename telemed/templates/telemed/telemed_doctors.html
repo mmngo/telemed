@@ -1,0 +1,36 @@
+{% extends "telemed/sidebar.html" %}
+
+{% load static %}
+
+{% block content %} 
+
+<title>TELEMED - Doctors</title>
+
+<div style="background-color: #081b36; color: white; text-align: center; font-size: 120%; padding: 5px" > TELEMED DOCTORS </div>
+
+<br>
+
+<div class="grid-about">
+	{% for d in available_doctors %} 
+
+	<div class="card-docs">
+		<div>
+			<img class="card-img-doc" src="{{ d.profile_pic.url }}" alt="profile_pic">
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">{{d.get_name}}</h5>
+			<p class="doc-info">
+				<strong>Specialization:</strong> {{d.specialization}}
+				<br>
+				<strong>Hospital Affiliation:</strong> {{d.hospital_affiliation}}
+				<br>
+				<strong>Mobile:</strong> {{d.mobile}}
+				<br>
+				<strong>Landline:</strong> {{d.landline}}
+			</p>
+ 		</div>
+	</div>
+	{% endfor %}
+</div>
+	  
+{% endblock %}

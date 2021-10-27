@@ -1,0 +1,51 @@
+{% extends "telemed/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class = "container">
+
+  <h3 align="center"> Developers </h3>
+  <br>
+
+	<div class="grid-about">
+		<div class="card">
+			<img class="card-img-top" src="{% static '/images/ciaclariellou.jpg' %}" alt="Card image cap">
+			<div class="card-body">
+				<h5 class="card-title">CIA, Abigael Clariellou</h5>
+				<p class="card-text">BS Computer Science</p>
+     		</div>
+		</div>
+		<div class="card">
+			<img class="card-img-top" src="{% static '/images/carmelalabiaga.jpg' %}" alt="Card image cap">
+			<div class="card-body">
+				<h5 class="card-title">LABIAGA, Carmela-Marie</h5>
+				<p class="card-text">BS Computer Science</p>
+			</div>
+    	</div>
+  		<div class="card" >
+			<img class="card-img-top" src="{% static '/images/gishellengo.jpg' %}" alt="Card image cap">
+			<div class="card-body">
+				<h5 class="card-title">NGO, Ma Gishelle Anne</h5>
+				<p class="card-text">BS Computer Science</p>
+			</div>
+		</div>
+		<div class="card" >
+	  		<img class="card-img-top" src="{% static '/images/elisharebucas.jpg' %}" alt="Card image cap">
+	  		<div class="card-body">
+	  			<h5 class="card-title">REBUCAS, Elisha Mhae</h5>
+	  			<p class="card-text">BS Computer Science</p>
+	    	</div>
+		</div>
+		<div class="card" >
+			<img class="card-img-top" src="{% static '/images/reginasantos.jpg' %}" alt="Card image cap">
+	  		<div class="card-body">
+	  			<h5 class="card-title">SANTOS, Regina Annee</h5>
+	  			<p class="card-text">BS Computer Science</p>
+	  		</div>
+	    </div>
+	</div>
+</div>
+<br>
+{% endblock content %}

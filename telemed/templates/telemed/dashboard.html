@@ -1,0 +1,219 @@
+{% extends "telemed/sidebar.html" %}
+
+{% load static %}
+
+{% block content %} 
+		<title>TELEMED - Dashboard</title>
+		
+		<!-- 		Only physician has access to this 		 -->
+    	{% if request.user.groups.all.0.name == "Physician" and request.user.physician.application_status == True %}
+
+			<div class="main">
+				<div class="grid-admin">
+				  <div class="grid-item-admin">
+				    <div class="admin-card">
+				      <div class="card-content-admin">
+				      	<i class="fa fa-users" style="font-size: 30px;"></i>
+				      	<p class="card-text"><a href="{% url 'physician_patient_list' %}">
+				      		<span>Patients Under You</span></a></p>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="grid-item-admin">
+				    <div class="admin-card">
+				      <div class="card-content-admin">
+				        <h4 class="card-header-admin">{{num_of_patients_active}}</h4>
+				        <p>Current Number of Patients</p>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+				<br>
+
+				<div style="background-color: #081b36; color: white; text-align: center; font-size: 120%; padding: 5px" > Consultation Requests </div>
+
+				<br>
+				{% if patient_requests|length != 0 %}
+				<div class="table-responsive">
+					<table class="table table-hover" id="dev-table">
+					<thead>
+						<tr>
+						<th>Name</th>
+						<th>Mobile</th>
+						<th>Landline</th>
+						<th>Address</th>
+						<th></th>
+						<th></th>
+
+						</tr>
+					</thead>
+						{% for d in patient_requests %} 
+						<tr>
+							<td> {{d.get_name}} </td>
+							<td> {{d.mobile}} </td>
+							<td> {{d.landline}} </td>
+							<td> {{d.address}} </td>
+							<td>
+								<a class="btn btn-success" href="{% url 'confirm-consultation' pk=d.patientID  %}">Confirm</a>
+							</td>
+							<td>
+								<a class="btn btn-danger" href="{% url 'reject-consultation' pk=d.patientID  %}">Delete</a>
+							</td>
+								
+						{% endfor %}
+
+						</tr>
+					</table>
+				</div>
+				<!-- end of table-reponsive -->
+				{% else %}
+				
+				<div class="container text-center">
+					<h5> No Consultation Requests </h5>
+				</div>
+
+				{% endif %}
+				
+			</div>
+			
+
+
+
+			
+		
+
+
+		<!-- 		Only patient has access to this 		 -->
+        {% elif request.user.groups.all.0.name == "Patient" and request.user.patient.application_status == True %}
+        <div class="main">
+
+			{% if request.user.patient.assigned_doctor_approve %}
+
+			<div style="background-color: #081b36; color: white; text-align: center; font-size: 120%; padding: 5px" > ASSIGNED DOCTOR </div>
+
+			<br>
+
+			{% for d in assigned_doctor %} 
+			<div class="grid-assigned-doc">
+				<div class="card-assigned-doc">
+					<img class="card-img-doc" src="{{ d.profile_pic.url }}" alt="profile_pic">
+					<div class="card-body">
+						<h5 class="card-title">{{d.get_name}}</h5>
+						<p class="doc-info">
+							<strong>Specialization:</strong> {{d.specialization}}
+							<br>
+							<strong>Hospital Affiliation:</strong> {{d.hospital_affiliation}}
+							<br>
+							<strong>Mobile:</strong> {{d.mobile}}
+							<br>
+							<strong>Landline:</strong> {{d.landline}}
+						</p>
+		     		</div>
+				</div>
+			</div>
+	    
+			{% endfor %}
+
+			<!-- end of table-reponsive -->
+
+		{% else %}
+
+			<div style="background-color: #081b36; color: white; text-align: center; font-size: 120%; padding: 5px" > TELEMED DOCTORS </div>
+
+			<br>
+
+			
+			<div class="grid-docs">
+				{% for d in available_doctors %} 
+
+				<div class="card-docs">
+					<div>
+						<img class="card-img-doc" src="{{ d.profile_pic.url }}" alt="profile_pic">
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">{{d.get_name}}</h5>
+						<p class="doc-info">
+							<strong>Specialization:</strong> {{d.specialization}}
+							<br>
+							<strong>Hospital Affiliation:</strong> {{d.hospital_affiliation}}
+							<br>
+							<strong>Mobile:</strong> {{d.mobile}}
+							<br>
+							<strong>Landline:</strong> {{d.landline}}
+						</p>
+						<a href="{% url 'ask-consultation' d.physicianID %}" class="btn btn-primary"> Connect </a>
+		     		</div>
+				</div>
+				{% endfor %}
+			</div>
+	    
+			
+
+			
+
+		{% endif %}
+		</div>
+
+		{% elif request.user.physician.application_status == False or request.user.patient.application_status == False %}
+
+		<div class="container text-center">
+			<img width="200" src="{% static '/images/processing.png' %}">
+			<br><br><br><br>
+			<h3> Your registration is being processed. </h3>
+
+		</div>
+
+		{% endif %}
+
+
+		{% if request.user.groups.all.0.name == "System Admin" %}
+		<h1 class="panel-title" style ="text-align:center; color:white" ><span class = "label" style="background-color: #01032c; border-radius: 10px; padding: 0 10px;">Welcome Admin!</span></h1>
+
+		<br>
+
+		<div class="grid-admin">
+		  <div class="grid-item-admin-dashboard">
+		    <div class="admin-card">
+		      <div class="card-content-admin">
+		      	<h4 class="card-header-admin">{{total_num_of_patients}}</h4>
+		        <p>Total Number of Patients</p>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="grid-item-admin-dashboard">
+		    <div class="admin-card">
+		      <div class="card-content-admin">
+		        <h4 class="card-header-admin">{{total_num_of_physicians}}</h4>
+		        <p>Total Number of Physicians</p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="grid-admin" style="margin-top: 3rem;">
+		  <div class="grid-item-admin-dashboard">
+		    <div class="admin-card">
+		      <div class="card-content-admin">
+		      	<h4 class="card-header-admin">{{num_of_patient_applicants}}</h4>
+		        <p>Total Number of Patient Applicants</p>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="grid-item-admin-dashboard">
+		    <div class="admin-card">
+		      <div class="card-content-admin">
+		        <h4 class="card-header-admin">{{num_of_physician_applicants}}</h4>
+		        <p>Total Number of Physician Applicants</p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+			
+		{% endif %}
+
+
+
+
+
+{% endblock %}

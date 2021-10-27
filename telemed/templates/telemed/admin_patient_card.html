@@ -1,0 +1,36 @@
+{% extends "telemed/sidebar.html" %}
+
+{% load static %}
+
+{% block content %} 
+
+<!-- DIV-->
+<div class="grid-admin">
+  <div class="grid-item-admin">
+    <div class="admin-card">
+      <div class="card-content-admin">
+        <h4 class="card-header-admin"><a href="{% url 'admin_patient_record'%}">Patient Record</a></h4>
+        <p class="card-text">
+          contains list of active accounts
+        </p>
+        <i class="fa fa-folder-open f-left" style="font-size:30px"></i>
+      </div>
+    </div>
+  </div>
+  <div class="grid-item-admin">
+    <div class="admin-card">
+      <div class="card-content-admin">
+        <h4 class="card-header-admin"><a href="{% url 'admin_approve_patient'%}">Applicants</a></h4>
+        <p class="card-text">
+          contains list of applicants
+        </p>
+        <i class="fas fa-check-circle f-left" style="font-size: 30px;"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- END OF DIV -->
+
+{% endblock %}

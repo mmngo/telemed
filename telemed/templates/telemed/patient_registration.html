@@ -1,0 +1,128 @@
+{% extends "telemed/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <form method="POST">
+    {% csrf_token %}
+        <div class="registration-form">
+
+			<h3 class="login-title text-center"> PATIENT REGISTRATION </h3>
+			
+			<div class="row">
+				<!--First Name-->
+				<div class="col-md-4">
+					{% for field in userForm.visible_fields|slice:"0:1" %}
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label><br>
+						{{field}}
+						{{field.errors}}
+					</div>
+					{% endfor %}
+				</div>
+				<!--Middle Name-->
+				<div class="col-md-4">
+					{% for field in patientForm.visible_fields|slice:"0:1" %}
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label>
+						<span style="font-size: 12px;"> (optional)</span><br>
+						{{field}}
+						{{field.errors}}
+					</div>
+					{% endfor %}
+				</div>
+				<!--Last Name-->
+				<div class="col-md-4">
+					{% for field in userForm.visible_fields|slice:"1:2" %}
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label><br>
+						{{field}}
+						{{field.errors}}
+					</div>
+					{% endfor %}
+				</div>
+            </div>
+
+            <!-- Email  -->
+			<!-- Password  -->
+			<!-- Confirm Password  -->
+        	<div class="row">
+				{% for field in userForm.visible_fields|slice:"2:5" %}
+	            <div class="col-md-4">
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label><br>
+						{{field}}
+						{{field.errors}}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+			<div class="row">
+				<!-- Date of Birth  -->
+				{% for field in patientForm.visible_fields|slice:"1:2" %}
+	            <div class="col-md-4">
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label>
+						{{field}}
+						{{field.errors}}
+					</div>
+				</div>
+				{% endfor %}
+				<!-- Address  -->
+				{% for field in patientForm.visible_fields|slice:"2:3" %}
+	            <div class="col-md-8">
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label>
+						{{field}}
+						{{field.errors}}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+			<!-- Mobile  -->
+			<!-- Landline  -->
+			<div class="row">
+				{% for field in patientForm.visible_fields|slice:"3:4" %}
+	            <div class="col-md-6">
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label>
+						{{field}}
+						{{field.errors}}
+					</div>
+				</div>
+				{% endfor %}
+				{% for field in patientForm.visible_fields|slice:"4:5" %}
+	            <div class="col-md-6">
+			        <div class = "form-group">
+						<label class = "input_labels" for = "input">{{field.label}}</label>
+						<span style="font-size: 12px;"> (optional)</span><br>
+						{{field}}
+						{{field.errors}}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+			<br>
+
+	        <div class="col-md-12 text-center">
+                <button type="submit" class="login-btn">Register</button>
+            </div>
+
+            <br>
+
+            <div class="text-center">
+		        <p>Already have an account? <a href="{% url 'homepage'%}">Log In Here</a></p>
+		    </div>
+
+		</div> <!-- end of registration-form -->
+	</form>
+</div> <!-- end of container -->
+
+<br>
+<p class="text-center">Back to <a href="{% url 'homepage'%}">Home</a></p>
+<br>
+
+{% endblock content %}
